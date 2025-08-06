@@ -5,21 +5,21 @@
 
   vars:
   # Dominio
-  domain: "leonardope.cloud"
-  subdomain: "reports"
-  full_domain: "{{ subdomain }}.{{ domain }}"
+    domain: "leonardope.cloud"
+    subdomain: "reports"
+    full_domain: "{{ subdomain }}.{{ domain }}"
   
   # Let's Encrypt
-  email: "leonardope7@gmail.com"
-  acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
-  account_key_path: "/etc/letsencrypt/account.pem"
+    email: "leonardope7@gmail.com"
+    acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
+    account_key_path: "/etc/letsencrypt/account.pem"
   
   # Certificado
-  cert_key_path: "/etc/ssl/private/{{ full_domain }}.pem"
-  csr_path: "/etc/ssl/csr/{{ full_domain }}.csr"
-  cert_path: "/etc/httpd/ssl/{{ full_domain }}.crt"
-  cert_chain_path: "/etc/httpd/ssl/{{ full_domain }}-fullchain.crt"
-  cert_chain_only_path: "/etc/ssl/certs/{{ full_domain }}-chain.pem"
+    cert_key_path: "/etc/ssl/private/{{ full_domain }}.pem"
+    csr_path: "/etc/ssl/csr/{{ full_domain }}.csr"
+    cert_path: "/etc/httpd/ssl/{{ full_domain }}.crt"
+    cert_chain_path: "/etc/httpd/ssl/{{ full_domain }}-fullchain.crt"
+    cert_chain_only_path: "/etc/ssl/certs/{{ full_domain }}-chain.pem"
 
   tasks:
   
