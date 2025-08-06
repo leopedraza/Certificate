@@ -23,6 +23,16 @@
 
   tasks:
 
+    - name: Instalar pip3 en sistemas basados en RHEL
+      ansible.builtin.yum:
+        name: python3-pip
+        state: present
+
+    - name: Instalar cryptography
+      ansible.builtin.pip:
+        name: cryptography
+        executable: pip3
+
     - name: "Create required directories"
       file:
         path: "{{ item }}"
@@ -38,12 +48,10 @@
     - name: Generate an OpenSSL private key with the default values (4096 bits, RSA) for CSR request
       community.crypto.openssl_privatekey:
         path: "{{ cert_key_path }}"
-      delegate_to: localhost
   
     - name: Generate an OpenSSL private key with the default values (4096 bits, RSA) for ACME account
       community.crypto.openssl_privatekey:
         path: "{{ account_key_path }}"
-      delegate_to: localhost
   
     - name: Generate an OpenSSL Certificate Signing Request
       community.crypto.openssl_csr:
