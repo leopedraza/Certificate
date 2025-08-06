@@ -83,6 +83,7 @@
       community.crypto.acme_certificate:
         acme_directory: https://acme-v02.api.letsencrypt.org/directory
         account_key_src: "{{ account_key_path }}"
+        force: true
         csr: "{{ csr_path }}"
         dest: "{{ cert_path }}"
         fullchain_dest: "{{ cert_chain_path }}"
