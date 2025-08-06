@@ -73,8 +73,8 @@
   
     - name: Copy http-01 challenge for site
       ansible.builtin.copy:
-        dest: /var/www/html/{{ sample_com_challenge['challenge_data']['sample.com']['http-01']['resource'] }}
-        content: "{{ sample_com_challenge['challenge_data']['sample.com']['http-01']['resource_value'] }}"
+        dest: /var/www/html/{{ sample_com_challenge['challenge_data']['{{ full_domain }}']['http-01']['resource'] }}
+        content: "{{ sample_com_challenge['challenge_data'][' {{ full_domain }}']['http-01']['resource_value'] }}"
       when: sample_com_challenge is changed and '{{ full_domain }}' in sample_com_challenge['challenge_data']
   
     - name: Let the challenge be validated and retrieve the cert and intermediate certificate
