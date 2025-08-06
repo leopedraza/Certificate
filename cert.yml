@@ -5,9 +5,9 @@
 
   vars:
   # Dominio
-  domain: "reports"
-  subdomain: "www"
-  full_domain: "{{ reports }}.{{ leonardope.cloud }}"
+  domain: "leonardope.cloud"
+  subdomain: "reports"
+  full_domain: "{{ subdomain }}.{{ domain }}"
   
   # Let's Encrypt
   email: "leonardope7@gmail.com"
@@ -53,10 +53,10 @@
   
   - name: Let the challenge be validated and retrieve the cert and intermediate certificate
     community.crypto.acme_certificate:
-      account_key_src: /etc/pki/cert/private/account.key
-      csr: /etc/pki/cert/csr/sample.com.csr
-      dest: /etc/httpd/ssl/sample.com.crt
-      fullchain_dest: /etc/httpd/ssl/sample.com-fullchain.crt
-      chain_dest: /etc/httpd/ssl/sample.com-intermediate.crt
+      account_key_src: {{ account_key_path }}
+      csr: {{ csr_path }}
+      dest: {{ cert_path }}
+      fullchain_dest: {{ cert_chain_path }}
+      chain_dest: {{ cert_chain_only_path }}
       data: "{{ sample_com_challenge }}"
     
