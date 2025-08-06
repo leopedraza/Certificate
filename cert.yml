@@ -1,0 +1,23 @@
+---
+
+- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+  community.crypto.openssl_privatekey:
+    path: /etc/ssl/private/ansible.com.pem
+
+- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+  community.crypto.openssl_privatekey:
+    path: /etc/ssl/private/ansible.com.pem
+
+- name: Generate an OpenSSL Certificate Signing Request
+  community.crypto.openssl_csr:
+    path: /etc/ssl/csr/www.ansible.com.csr
+    privatekey_path: /etc/ssl/private/ansible.com.pem
+    common_name: www.ansible.com
+
+- name: Create a challenge for sample.com using a account key file.
+  community.crypto.acme_certificate:
+    account_key_src: /etc/pki/cert/private/account.key
+    csr_content: "{{ lookup('file', '/etc/pki/cert/csr/sample.com.csr') }}"
+    dest: /etc/httpd/ssl/sample.com.crt
+    fullchain_dest: /etc/httpd/ssl/sample.com-fullchain.crt
+  register: sample_com_challenge
