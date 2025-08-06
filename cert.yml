@@ -63,7 +63,7 @@
     - name: Create a challenge for sample.com using a account key file.
       community.crypto.acme_certificate:
         account_key_src: "{{ account_key_path }}"
-        csr_content: "{{ lookup('file', ' {{ csr_path }} ') }}"
+        csr: "{{ csr_path }}"
         dest: "{{ cert_path }}"
         fullchain_dest: "{{ cert_chain_path }}"
       register: sample_com_challenge
