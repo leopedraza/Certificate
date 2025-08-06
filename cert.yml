@@ -23,6 +23,11 @@
 
   tasks:
 
+    - name: Instalar cryptography en host remoto
+      ansible.builtin.pip:
+        name: cryptography
+        executable: pip3
+
     - name: "Create required directories"
       file:
         path: "{{ item }}"
