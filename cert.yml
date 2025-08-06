@@ -62,6 +62,7 @@
       
     - name: Create a challenge for sample.com using a account key file.
       community.crypto.acme_certificate:
+        acme_directory: https://acme-v01.api.letsencrypt.org/directory
         account_key_src: "{{ account_key_path }}"
         csr: "{{ csr_path }}"
         dest: "{{ cert_path }}"
