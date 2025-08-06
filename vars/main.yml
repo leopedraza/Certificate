@@ -1,14 +1,14 @@
 # GoDaddy API credentials
-godaddy_api_key: "TU_API_KEY"
-godaddy_api_secret: "TU_API_SECRET"
+godaddy_api_key: "{{ lookup('env', 'GODADDY_API_KEY') }}"
+godaddy_api_secret: "{{ lookup('env', 'GODADDY_API_SECRET') }}"
 
 # Dominio
 domain: "tudominio.com"
 subdomain: "www"
-full_domain: "{{ subdomain }}.{{ domain }}"
+full_domain: "{{ reports }}.{{ leonardope.cloud }}"
 
 # Let's Encrypt
-email: "admin@tudominio.com"
+email: "leonardope7@gmail.com"
 acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
 account_key_path: "/etc/letsencrypt/account.key"
 
