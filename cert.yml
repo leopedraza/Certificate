@@ -65,6 +65,7 @@
       community.crypto.acme_certificate:
         acme_version: 2
         terms_agreed: true
+        force: true
         acme_directory: https://acme-v02.api.letsencrypt.org/directory
         account_key_src: "{{ account_key_path }}"
         csr: "{{ csr_path }}"
