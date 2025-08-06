@@ -1,0 +1,20 @@
+# GoDaddy API credentials
+godaddy_api_key: "TU_API_KEY"
+godaddy_api_secret: "TU_API_SECRET"
+
+# Dominio
+domain: "tudominio.com"
+subdomain: "www"
+full_domain: "{{ subdomain }}.{{ domain }}"
+
+# Let's Encrypt
+email: "admin@tudominio.com"
+acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
+account_key_path: "/etc/letsencrypt/account.key"
+
+# Certificado
+cert_key_path: "/etc/ssl/private/{{ full_domain }}.key"
+csr_path: "/etc/ssl/csr/{{ full_domain }}.csr"
+cert_path: "/etc/ssl/certs/{{ full_domain }}.crt"
+cert_chain_path: "/etc/ssl/certs/{{ full_domain }}-fullchain.pem"
+cert_chain_only_path: "/etc/ssl/certs/{{ full_domain }}-chain.pem"
