@@ -44,6 +44,7 @@
         - "/etc/ssl/private/"
         - "/etc/ssl/csr/"
         - "/etc/httpd/ssl/"
+        - "/etc/letsencrypt/"
   
     - name: Generate an OpenSSL private key with the default values (4096 bits, RSA) for CSR request
       community.crypto.openssl_privatekey:
