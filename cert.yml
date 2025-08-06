@@ -45,6 +45,7 @@
         - "/etc/ssl/csr/"
         - "/etc/httpd/ssl/"
         - "/etc/letsencrypt/"
+        - "/var/www/html/.well-known/acme-challenge/"
   
     - name: Generate an OpenSSL private key with the default values (4096 bits, RSA) for CSR request
       community.crypto.openssl_privatekey:
