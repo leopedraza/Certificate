@@ -1,0 +1,82 @@
+- name: Obtener e instalar certificado SSL de Let's Encrypt en Apache con GoDaddy DNS
+  hosts: webservers
+  become: true
+  vars_files:
+    - vars/main.yml
+
+  tasks:
+
+    - name: Crear cuenta ACME
+      community.crypto.acme_account:
+        account_key_src: "{{ account_key_path }}"
+        email: "{{ email }}"
+        terms_agreed: true
+        acme_directory: "{{ acme_directory }}"
+      register: acme_account
+
+    - name: Crear clave privada para el certificado
+      community.crypto.openssl_privatekey:
+        path: "{{ cert_key_path }}"
+        size: 2048
+
+    - name: Crear CSR (Certificate Signing Request)
+      community.crypto.openssl_csr:
+        path: "{{ csr_path }}"
+        privatekey_path: "{{ cert_key_path }}"
+        common_name: "{{ full_domain }}"
+
+    - name: Solicitar challenge DNS-01
+      community.crypto.acme_certificate:
+        account_key_src: "{{ account_key_path }}"
+        csr_path: "{{ csr_path }}"
+        acme_directory: "{{ acme_directory }}"
+        challenge: dns-01
+        data: "{{ acme_challenge_data | default(omit) }}"
+        terms_agreed: true
+        state: present
+      register: cert_result
+
+    - name: Crear registro TXT en GoDaddy
+      community.general.godaddy:
+        api_key: "{{ godaddy_api_key }}"
+        api_secret: "{{ godaddy_api_secret }}"
+        domain: "{{ domain }}"
+        record_type: TXT
+        name: "_acme-challenge.{{ subdomain }}"
+        ttl: 600
+        value: "{{ cert_result.challenge_data['dns-01'][0].resource_record.value }}"
+        state: present
+      delegate_to: localhost
+      run_once: true
+
+    - name: Esperar propagación DNS
+      ansible.builtin.wait_for:
+        timeout: 300
+        sleep: 30
+      delegate_to: localhost
+      run_once: true
+
+    - name: Completar solicitud del certificado
+      community.crypto.acme_certificate:
+        account_key_src: "{{ account_key_path }}"
+        csr_path: "{{ csr_path }}"
+        acme_directory: "{{ acme_directory }}"
+        challenge: dns-01
+        data: "{{ cert_result }}"
+        fullchain_dest: "{{ cert_chain_path }}"
+        cert_dest: "{{ cert_path }}"
+        key_dest: "{{ cert_key_path }}"
+        chain_dest: "{{ cert_chain_only_path }}"
+        state: present
+
+    - name: Configurar Apache con certificado SSL
+      ansible.builtin.template:
+        src: ssl-apache.conf.j2
+        dest: "/etc/httpd/conf.d/{{ full_domain }}.conf"
+      notify: restart apache
+
+  handlers:
+    - name: restart apache
+      ansible.builtin.service:
+        name: httpd
+        state: restarted

@@ -1,0 +1,17 @@
+version: 3
+
+dependencies:
+  python:
+    - cryptography
+    - requests
+  system:
+    - openssl
+    - rsync
+  galaxy:
+    collections:
+      - name: community.crypto
+      - name: community.general
+
+images:
+  base_image:
+    name: registry.redhat.io/ansible-automation-platform-23/ee-minimal-rhel8:latest
