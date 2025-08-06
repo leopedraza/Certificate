@@ -89,4 +89,25 @@
         fullchain_dest: "{{ cert_chain_path }}"
         chain_dest: "{{ cert_chain_only_path }}"
         data: "{{ sample_com_challenge }}"
-    
+
+    - name: Instalar Apache y módulo SSL (RHEL)
+      ansible.builtin.yum:
+        name:
+          - httpd
+          - mod_ssl
+        state: present
+
+    - name: Configurar VirtualHost HTTPS
+      ansible.builtin.template:
+        src: ssl-apache.conf.j2
+        dest: "{{ apache_ssl_conf }}"
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Reiniciar Apache
+
+  handlers:
+    - name: Reiniciar Apache
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
