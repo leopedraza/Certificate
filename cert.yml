@@ -80,6 +80,7 @@
   
     - name: Let the challenge be validated and retrieve the cert and intermediate certificate
       community.crypto.acme_certificate:
+        acme_directory: https://acme-v02.api.letsencrypt.org/directory
         account_key_src: "{{ account_key_path }}"
         csr: "{{ csr_path }}"
         dest: "{{ cert_path }}"
