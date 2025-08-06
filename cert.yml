@@ -1,4 +1,25 @@
 ---
+- name: Obtener e instalar certificado SSL de Let's Encrypt en Apache con GoDaddy DNS
+  hosts: reports
+  become: true
+
+# Dominio
+domain: "reports"
+subdomain: "www"
+full_domain: "{{ reports }}.{{ leonardope.cloud }}"
+
+# Let's Encrypt
+email: "leonardope7@gmail.com"
+acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
+account_key_path: "/etc/letsencrypt/account.key"
+
+# Certificado
+cert_key_path: "/etc/ssl/private/{{ full_domain }}.key"
+csr_path: "/etc/ssl/csr/{{ full_domain }}.csr"
+cert_path: "/etc/ssl/certs/{{ full_domain }}.crt"
+cert_chain_path: "/etc/ssl/certs/{{ full_domain }}-fullchain.pem"
+cert_chain_only_path: "/etc/ssl/certs/{{ full_domain }}-chain.pem"
+
 
 - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
   community.crypto.openssl_privatekey:
