@@ -6,7 +6,7 @@
     SSLEngine on
     SSLCertificateFile {{ cert_path }}
     SSLCertificateKeyFile {{ cert_key_path }}
-    SSLCertificateChainFile {{ cert_chain_only_path }}
+    SSLCertificateChainFile {{ cert_chain_only_path }} 
 
     <Directory /var/www/html>
         Options Indexes FollowSymLinks

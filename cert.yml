@@ -8,6 +8,7 @@
     domain: "leonardope.cloud"
     subdomain: "reports"
     full_domain: "{{ subdomain }}.{{ domain }}"
+    apache_ssl_conf: "/etc/httpd/conf.d/{{ full_domain }}-ssl.conf"
   
   # Let's Encrypt
     email: "leonardope7@gmail.com"
