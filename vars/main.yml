@@ -3,7 +3,7 @@ godaddy_api_key: "{{ lookup('env', 'GODADDY_API_KEY') }}"
 godaddy_api_secret: "{{ lookup('env', 'GODADDY_API_SECRET') }}"
 
 # Dominio
-domain: "tudominio.com"
+domain: "reports"
 subdomain: "www"
 full_domain: "{{ reports }}.{{ leonardope.cloud }}"
 
