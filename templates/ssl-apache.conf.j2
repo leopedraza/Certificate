@@ -1,0 +1,19 @@
+<VirtualHost *:443>
+    ServerName {{ full_domain }}
+
+    DocumentRoot /var/www/html
+
+    SSLEngine on
+    SSLCertificateFile {{ cert_path }}
+    SSLCertificateKeyFile {{ cert_key_path }}
+    SSLCertificateChainFile {{ cert_chain_only_path }}
+
+    <Directory /var/www/html>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog logs/{{ full_domain }}-error_log
+    CustomLog logs/{{ full_domain }}-access_log combined
+</VirtualHost>
