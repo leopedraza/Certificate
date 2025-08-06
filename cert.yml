@@ -1,5 +1,5 @@
 ---
-- name: Obtener e instalar certificado SSL de Let's Encrypt en Apache con GoDaddy DNS
+- name: Obtener e instalar certificado SSL de Let's Encrypt en Apache
   hosts: reports
   become: true
 
@@ -19,9 +19,21 @@
     csr_path: "/etc/ssl/csr/{{ full_domain }}.csr"
     cert_path: "/etc/httpd/ssl/{{ full_domain }}.crt"
     cert_chain_path: "/etc/httpd/ssl/{{ full_domain }}-fullchain.crt"
-    cert_chain_only_path: "/etc/ssl/certs/{{ full_domain }}-chain.pem"
+    cert_chain_only_path: "/etc/httpd/ssl/{{ full_domain }}-chain.crt"
 
   tasks:
+
+    - name: "Create required directories"
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: u=rwx,g=x,o=x
+      with_items:
+        - "/etc/ssl/private/"
+        - "/etc/ssl/csr/"
+        - "/etc/httpd/ssl/"
   
     - name: Generate an OpenSSL private key with the default values (4096 bits, RSA) for CSR request
       community.crypto.openssl_privatekey:
